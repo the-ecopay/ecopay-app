@@ -24,6 +24,20 @@ const PickupDetail = ({route,navigation}) => {
         return require('../assets/images/non-recyclable-bucket.png');
     }
   }
+  const getRates=(item)=>{
+    switch(item) {
+      case 'Plastic':
+        return '15-10/kg';
+      case 'Metal':
+        return '15-10/kg';
+      case 'Paper':
+        return '15-10/kg';
+      case 'Electronics':
+        return '15-10/kg';
+      default:
+        return null
+    }
+  }
 
   const recyclableObjects=data.ai_json_response['Recyclable / Reusable Objects']
   const nonRecyclableObjects=data.ai_json_response['Non-Recyclable Objects']
@@ -35,14 +49,14 @@ const PickupDetail = ({route,navigation}) => {
 
         {/* header */}
         <Animated.View entering={FadeInDown} style={tw`flex justify-between px-4 mt-4 flex-row items-center`} >
-            <Text style={[tw`text-[#004225]`,fontStyles.subHeading]}>Detected Items</Text>
-            {/* <TouchableOpacity style={tw`bg-[#508D4E] px-3 py-3 rounded-full`}>
+            <Text style={[tw`text-[#004225]`,fontStyles.subHeading]}>Analyzed Items</Text>
+            <TouchableOpacity style={tw`bg-[#508D4E] px-3 py-3 rounded-full`}>
               <Text style={[tw`text-white`,fontStyles.text]}>View Image</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </Animated.View>
 
         {/* content */}
-        <ScrollView style={tw`flex m-4 mb-19`} > 
+        <ScrollView style={tw`flex m-4 mb-25`} > 
           
           {/* Recyclable render */}
         {!isEmpty(recyclableObjects)&&
@@ -71,6 +85,11 @@ const PickupDetail = ({route,navigation}) => {
                       </View>
                     ))}
                   </View>
+
+                  {/* <View style={tw`pl-20`}>
+                    <Text>Rate:</Text>
+                    <Text>{getRates(category)}</Text>
+                  </View> */}
                 </View>
                 ))}
           </View>
@@ -113,8 +132,10 @@ const PickupDetail = ({route,navigation}) => {
 
 
         {/* footer */}
+
         {/* schedule pickup button */}
-        <View style={tw`h-20 w-[100%] flex justify-center items-center bottom-0 absolute`}>
+        <View style={tw`h-25 w-[100%] flex justify-center items-center bottom-0 absolute`}>
+          <Text style={[tw`text-center text-[#E68369]`,fontStyles.text]}>The items detected by AI may be irrelevant or include unwanted items.</Text>
           <TouchableOpacity style={tw`bg-[#508D4E] px-20 py-3 rounded-full`} onPress={()=>navigation.navigate('PickupScheduled',{'data':data})}>
             <Text style={[tw`text-white`,fontStyles.subHeading]}>Schedule Pickup</Text>
           </TouchableOpacity>

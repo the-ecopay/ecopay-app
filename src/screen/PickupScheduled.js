@@ -3,6 +3,7 @@ import React from 'react'
 import Animated,{FadeInDown} from 'react-native-reanimated'
 import tw from 'twrnc'
 import { capitalizeFirstLetter, fontStyles, isEmpty } from '../utils/utils'
+import PoweredGemini from '../components/PoweredGemini'
 
 const PickupScheduled = ({route,navigation}) => {
   const {data}=route.params
@@ -16,7 +17,7 @@ const PickupScheduled = ({route,navigation}) => {
             <Text style={[tw`text-[#004225]`,fontStyles.subHeading]}>Pickup Scheduled</Text>
       </Animated.View>
 
-      <View style={tw`bg-white p-3 rounded-md m-2 `}>
+      <View style={tw`bg-white p-3 rounded-md m-2 mt-5`}>
 
         <View style={tw`flex-row items-center justify-between`}>
           {/* pickup details */}
@@ -63,11 +64,9 @@ const PickupScheduled = ({route,navigation}) => {
           <Text style={[tw`text-[#387F39]`,fontStyles.text]}>2. Payment will be made only for recycled items based on their weight.
           </Text>
         </View>
-
-
-
       </View>
-      
+    
+    {/* <PoweredGemini/> */}
     </SafeAreaView>
   )
 }

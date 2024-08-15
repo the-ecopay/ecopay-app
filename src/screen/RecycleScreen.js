@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView ,Image,StatusBar, TouchableOpacity, ImageBackground, TouchableHighlight} from 'react-native'
+import { View, Text,SafeAreaView ,Image,StatusBar, TouchableOpacity, ImageBackground, TouchableHighlight, ScrollView} from 'react-native'
 import React,{useState} from 'react'
 import tw from 'twrnc'
 import { fontStyles, isEmpty } from '../utils/utils'
@@ -7,6 +7,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { detectImage } from '../api'
 import Loading from '../components/Loading'
+import PoweredGemini from '../components/PoweredGemini'
 
 const RecycleScreen = ({navigation}) => {
     // const device=useCameraDevice('back');   
@@ -62,23 +63,27 @@ const RecycleScreen = ({navigation}) => {
         <Text style={[tw`text-center mt-2 text-[#387F39]`,fontStyles.heading]}>Eco</Text>
         <Text style={[tw`text-center mt-2 text-[#FF9A00]`,fontStyles.heading]}>Pay</Text>
       </View>
-      <View style={tw`flex justify-center items-center mt-10 gap-y-10`} >
+      <View style={tw`flex justify-center items-center mt-10 gap-y-7`} >
         <Text style={[tw`text-[#004225]`,fontStyles.heading]}>Request Recycle</Text>
-        
+      
+      <ScrollView horizontal={true} style={tw``}>
         {/* list camera taken/selected images */}
         {!isEmpty(cameraPhoto)&&
-            cameraPhoto.map((photo,index)=>(
-              <ImageBackground key={index} source={{uri:photo}} style={[{height:hp(35),width:hp(35)}]} imageStyle={{borderRadius:20}}>
+            cameraPhoto.map((photo,index)=> (
+                <ImageBackground key={index} source={{uri:photo}} style={[tw`mx-2`,{height:hp(35),width:hp(35)}]} imageStyle={{borderRadius:20}}>
                   <TouchableOpacity
-                      onPress={()=> setCameraPhoto([])}
-                      style={tw`absolute right-[-3] top-[-4] bg-white rounded-full`}
-                    >
+                       onPress={() => {
+                        const updatedPhotos = cameraPhoto.filter((_, i) => i !== index);
+                        setCameraPhoto(updatedPhotos);
+                      }}
+                      style={tw`absolute right-0 bg-white rounded-full`}
+                      >
                       <XCircleIcon size={35} color={'#365E32'}/> 
                   </TouchableOpacity>
-
                 </ImageBackground>
             ))
-        }
+          }
+        </ScrollView>
 
         {!isEmpty(cameraPhoto)&&
           // add upload image button in small 
@@ -99,7 +104,7 @@ const RecycleScreen = ({navigation}) => {
             {/* Continue button to proceed */}
             {loading===true?
             <View style={[tw`bg-[#ECFFE6] w-[80%] px-10 h-[20] rounded-md flex flex-row items-center justify-center`]}>
-              <Text style={[tw`text-black text-center pr-2`,fontStyles.subHeading]}>Detecting Image</Text>
+              <Text style={[tw`text-black text-center pr-2`,fontStyles.subHeading]}>Analyzing Items</Text>
               <Loading/>
             </View>
             :
@@ -129,6 +134,9 @@ const RecycleScreen = ({navigation}) => {
           </>
           }
       </View>
+
+      <PoweredGemini/>
+      
     </SafeAreaView>
   )
 }
