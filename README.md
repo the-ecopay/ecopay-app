@@ -10,7 +10,7 @@ First, you will need to start **Metro**, the JavaScript _bundler_ that ships _wi
 
 To start Metro, run the following command from the _root_ of your React Native project:
 
->**Note**: If running on localhost this app and ecopay-be should be run parallel in same localhost and change src > api > config.js > API_BASE_URL = http://{to your local ipv4 address}:8000
+##Note: If running on localhost this app and ecopay-be should be run parallel in same localhost and change src > api > config.js > API_BASE_URL = http://{to your local ipv4 address}:8000
 
 ```bash
 # using npm
